@@ -1,13 +1,16 @@
 
 class Oystercard
 
-  attr_reader :balance, :in_journey, :entry_station
+  attr_reader :balance, :entry_station, :journeys, :journeys_array, :exit_station
   DEFAULT_MAXIMUM_FUNDS = 90
   DEFAULT_MINIMUM_FUNDS = 1
 
   def initialize
     @balance = 0
     @entry_station = nil
+    @exit_station = nil
+    @journeys_array = []
+    @journeys = Hash.new
   end
 
   def top_up(value)
@@ -22,14 +25,15 @@ class Oystercard
     end
   end
 
-  def touch_in(station)
+  def touch_in(entry_station = Station.new)
     fail 'Minimum fare £1' if minimum?
-    @entry_station = station
+    @entry_station = entry_station
   end
 
-  def touch_out(fare = DEFAULT_MINIMUM_FUNDS)
-    deduct(fare)
-    @entry_station = nil
+  def touch_out(exit_station = Station.new)
+    deduct
+    @exit_station = exit_station
+    journey
   end
 
 private
@@ -42,7 +46,14 @@ private
     @balance < DEFAULT_MINIMUM_FUNDS
   end
 
-  def deduct(fare)
+  def deduct(fare = DEFAULT_MINIMUM_FUNDS)
     @balance -= fare
   end
+
+  def journey
+    @journeys_array << [@entry_station, exit_station]
+    @journeys = @journeys_array.map { |entry, exit| { entry_station: entry, exit_station: exit} }
+    @entry_station = nil
+  end
+
 end

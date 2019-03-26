@@ -19,14 +19,15 @@ describe Oystercard do
     end
 
     it 'can deduct a fare' do
-      subject.touch_out(10)
-      expect(subject.balance).to eq -10
+      subject.touch_out
+      expect(subject.balance).to eq -1
     end
 
     it 'Has minimum fare available' do
       expect { subject.touch_in(station) }.to raise_error 'Minimum fare £1'
     end
   end
+
   describe '#journey' do
     it 'touches in' do
       subject.top_up(2)
@@ -46,20 +47,32 @@ describe Oystercard do
     it 'checks if in journey' do
       expect(subject.in_journey?).to eq false
     end
-  end
-  
-  describe '#interact with station' do
-    it 'remembers entry station' do
-      subject.top_up(2)
-      subject.touch_in(station)
-      expect(subject.entry_station).to eq station
-    end
 
-    it 'forgets entry station on touch out' do
-      subject.top_up(2)
-      subject.touch_in(station)
-      subject.touch_out
-      expect(subject.entry_station).to eq nil
+    describe '#interact with station' do
+      it 'remembers entry station' do
+        subject.top_up(2)
+        subject.touch_in(station)
+        expect(subject.entry_station).to eq station
+      end
+
+      it 'forgets entry station on touch out' do
+        subject.top_up(2)
+        subject.touch_in(station)
+        subject.touch_out
+        expect(subject.entry_station).to eq nil
+      end
+
+      it 'remembers a journey' do
+        subject.top_up(2)
+        subject.touch_in("station1")
+        subject.touch_out("station2")
+        expect(subject.journeys).to eq [{:entry_station=>"station1", :exit_station=>"station2"}]
+      end
+
+      it 'checks a new card has no journey history' do
+        expect(subject.journeys).to be_empty
+      end
+
     end
   end
 end
