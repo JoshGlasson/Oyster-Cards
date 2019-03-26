@@ -11,12 +11,14 @@ class Journey
     @journeys = Hash.new
   end
 
-  def entry_station(station)
+  def entrystation(station)
     @entry_station = station
   end
 
-  def exit_station(station)
+  def exitstation(station)
     @exit_station = station
+    @journeys_array << [@entry_station, @exit_station]
+    return @entry_station == nil
   end
 
   def in_journey?
@@ -28,7 +30,6 @@ class Journey
   end
 
   def journey
-    @journeys_array << [@entry_station, @exit_station]
     @journeys = @journeys_array.map { |entry, exit| { entry_station: entry, exit_station: exit} }
     @entry_station = nil
     @exit_station = nil

@@ -1,7 +1,7 @@
 
 class Oystercard
 
-  attr_reader :balance, :entry_station, :journeys, :journeys_array, :exit_station
+  attr_reader :balance, :entry_station, :journeys, :journeys_array, :exit_station, :journey
   DEFAULT_MAXIMUM_FUNDS = 90
   DEFAULT_MINIMUM_FUNDS = 1
 
@@ -28,12 +28,12 @@ class Oystercard
 
   def touch_in(station)
     fail 'Minimum fare £1' if minimum?
-    @journey.entry_station(station)
+    @journey.entrystation(station)
   end
 
   def touch_out(station)
     deduct
-    @journey.exit_station(station)
+    @journey.exitstation(station)
   end
 
 private

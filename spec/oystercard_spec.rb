@@ -2,6 +2,7 @@ require 'oystercard'
 
 describe Oystercard do
   let(:station){ double :station }
+  let(:journey){ double :journey }
 
   describe '#card balance' do
     it 'responds to balance being 0' do
@@ -29,50 +30,10 @@ describe Oystercard do
   end
 
   describe '#journey' do
-    it 'touches in' do
-      subject.top_up(2)
-      subject.touch_in(station)
-      expect(subject.in_journey?).to eq true
-    end
-
-    it 'touches out' do
-      subject.touch_out(station)
-      expect(subject.in_journey?).to eq false
-    end
 
     it 'charges for journey' do
       expect {subject.touch_out(station)}.to change{subject.balance}.by(-Oystercard::DEFAULT_MINIMUM_FUNDS)
     end
 
-    it 'checks if in journey' do
-      expect(subject.in_journey?).to eq false
-    end
-
-    describe '#interact with station' do
-      it 'remembers entry station' do
-        subject.top_up(2)
-        subject.touch_in(station)
-        expect(subject.entry_station).to eq station
-      end
-
-      it 'forgets entry station on touch out' do
-        subject.top_up(2)
-        subject.touch_in(station)
-        subject.touch_out(station)
-        expect(subject.entry_station).to eq nil
-      end
-
-      it 'remembers a journey' do
-        subject.top_up(2)
-        subject.touch_in("station1")
-        subject.touch_out("station2")
-        expect(subject.journeys).to eq [{:entry_station=>"station1", :exit_station=>"station2"}]
-      end
-
-      it 'checks a new card has no journey history' do
-        expect(subject.journeys).to be_empty
-      end
-
-    end
   end
 end
