@@ -25,12 +25,12 @@ class Oystercard
     end
   end
 
-  def touch_in(entry_station = Station.new)
+  def touch_in(entry_station)
     fail 'Minimum fare £1' if minimum?
     @entry_station = entry_station
   end
 
-  def touch_out(exit_station = Station.new)
+  def touch_out(exit_station)
     deduct
     @exit_station = exit_station
     journey
