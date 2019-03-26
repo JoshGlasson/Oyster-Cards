@@ -16,7 +16,9 @@ describe Journey do
   end
 
   it 'returns a fare of a journey' do
-    expect(subject.fare).to eq 1
+    subject.entrystation("Station1")
+    subject.exitstation("Station2")
+    expect(subject.fare?).to eq 1
   end
 
   it 'checks if a journey is complete' do

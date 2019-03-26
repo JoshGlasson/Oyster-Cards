@@ -1,6 +1,6 @@
 class Journey
 
-  attr_reader :entry_station, :journeys, :journeys_array, :exit_station
+  attr_reader :entry_station, :journeys, :journeys_array, :exit_station, :fare
   MINIMUM_FARE = 1
   PENALTY_FARE = 6
 
@@ -9,6 +9,7 @@ class Journey
     @exit_station = nil
     @journeys_array = []
     @journeys = Hash.new
+    @fare = 0
   end
 
   def entrystation(station)
@@ -18,6 +19,7 @@ class Journey
   def exitstation(station)
     @exit_station = station
     @journeys_array << [@entry_station, @exit_station]
+    fare?
     return @entry_station == nil
   end
 
@@ -35,8 +37,12 @@ class Journey
     @exit_station = nil
   end
 
-  def fare
-    return MINIMUM_FARE
+  def fare?
+    if @entry_station == nil || @exit_station == nil
+      @fare = PENALTY_FARE
+    else
+      @fare = MINIMUM_FARE
+    end
   end
 
 
