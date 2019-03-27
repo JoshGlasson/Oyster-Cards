@@ -1,7 +1,7 @@
 require 'journey'
 
 describe Journey do
-  let(:oystercard){ double :oystercard }
+  let(:oystercard) { double :oystercard }
 
   it 'starts a journey' do
   #allow(oystercard).to receive(:touch_in).and_return("Station")
