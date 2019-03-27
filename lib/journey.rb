@@ -20,7 +20,7 @@ class Journey
     @exit_station = station
     @journeys_array << [@entry_station, @exit_station]
     fare?
-    return @entry_station == nil
+    return @entry_station = nil
   end
 
   def in_journey?

@@ -4,7 +4,6 @@ describe Journey do
   let(:oystercard) { double :oystercard }
 
   it 'starts a journey' do
-  #allow(oystercard).to receive(:touch_in).and_return("Station")
   expect(subject.entrystation("Station")).to eq "Station"
   end
 
@@ -18,7 +17,7 @@ describe Journey do
   it 'returns a fare of a journey' do
     subject.entrystation("Station1")
     subject.exitstation("Station2")
-    expect(subject.fare?).to eq 1
+    expect(subject.fare?).to eq 6
   end
 
   it 'checks if a journey is complete' do
@@ -53,10 +52,6 @@ describe Journey do
     subject.exitstation("Station2")
     subject.journey
     expect(subject.entry_station).to eq nil
-  end
-
-  it 'checks a new card has no journey history' do
-    expect(subject.journeys).to be_empty
   end
 
 

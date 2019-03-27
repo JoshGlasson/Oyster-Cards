@@ -1,2 +1,3 @@
 class JourneyLog
+
 end
