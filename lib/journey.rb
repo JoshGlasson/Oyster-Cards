@@ -20,7 +20,6 @@ class Journey
     @exit_station = station
     @journeys_array << [@entry_station, @exit_station]
     fare?
-    return @entry_station = nil
   end
 
   def in_journey?
@@ -41,7 +40,7 @@ class Journey
     if @entry_station == nil || @exit_station == nil
       @fare = PENALTY_FARE
     else
-      @fare = MINIMUM_FARE
+      @fare = (@entry_station.zone - @exit_station.zone).abs + MINIMUM_FARE
     end
   end
 

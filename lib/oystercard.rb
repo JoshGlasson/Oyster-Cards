@@ -34,7 +34,7 @@ private
     @balance < DEFAULT_MINIMUM_FUNDS
   end
 
-  def deduct(fare = DEFAULT_MINIMUM_FUNDS)
+  def deduct(fare = @journey.fare?)
     @balance -= fare
   end
 

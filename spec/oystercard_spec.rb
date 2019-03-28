@@ -21,7 +21,7 @@ describe Oystercard do
 
     it 'can deduct a fare' do
       subject.touch_out(station)
-      expect(subject.balance).to eq -1
+      expect(subject.balance).to eq -6
     end
 
     it 'Has minimum fare available' do
@@ -32,7 +32,7 @@ describe Oystercard do
   describe '#journey' do
 
     it 'charges for journey' do
-      expect {subject.touch_out(station)}.to change{subject.balance}.by(-Oystercard::DEFAULT_MINIMUM_FUNDS)
+      expect {subject.touch_out(station)}.to change{subject.balance}.by(-Journey::PENALTY_FARE)
     end
 
   end
